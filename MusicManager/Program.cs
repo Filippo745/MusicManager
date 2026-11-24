@@ -14,13 +14,38 @@ internal class Program
         // Console.WriteLine("Query numero 1:");
         // Q1(80);
 
-        Console.WriteLine("Query numero 2:");
+        // Console.WriteLine("Query numero 2:");
 
-        Q2("Sony Music");
+        // Q2("Sony Music");
+
+        // Console.WriteLine("Query numero 3:");
+
+        Q3();
 
 
     }
 
+        //trovare e stampare i nomi dei cantanti e il relativo festival che hanno avuto l'onere di aprire il festival, ovvero quelli con OrdineUscita = 1
+
+        static void Q3()
+        {
+            using var db = new MusicManagerContext();
+
+            var risultati = db.Esibizioni
+                .Where(e => e.OrdineUscita == 1)
+                .Select(e => new
+                {
+                    e.Cantante.NomeArte,
+                    NomeFestival = e.Festival.Nome
+
+                })
+                .ToList();
+
+            foreach (var c in risultati)
+            {
+                Console.WriteLine($"{c.NomeArte} - {c.NomeFestival}");
+            }
+    }
     
 
     //metodo che riceva un punteggio minimo e stampi, per le esibizioni che superano la soglia:
